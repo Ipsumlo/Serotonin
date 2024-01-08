@@ -7,7 +7,7 @@ import SwiftUI
 //import SwiftUIBackports
 //
 
-let fancyAnimation: SwiftUI.Animation = .snappy(duration: 0.35, extraBounce: 0.085) // smoooooth operaaatooor
+//let fancyAnimation: SwiftUI.Animation = .snappy(duration: 0.35, extraBounce: 0.085) // smoooooth operaaatooor
 
 /// An actually good UI, courtesy of ya boi BomberFish.
 struct CoolerContentView: View {
@@ -50,9 +50,9 @@ struct CoolerContentView: View {
             let data = handle.availableData
             let str = String(data: data, encoding: .ascii) ?? "[i] <Non-ascii data of size\(data.count)>\n"
             DispatchQueue.main.async {
-                withAnimation(fancyAnimation) {
+  //              withAnimation(fancyAnimation) {
                     logItems.append(str)
-                }
+    //            }
             }
         }
     }
@@ -85,24 +85,7 @@ struct CoolerContentView: View {
                         .foregroundColor(.secondary)
                     VStack(alignment: .leading) {
                         VStack(alignment: .leading) {
-                            HStack {
-                                Label("PUAF Pages", systemImage: "doc")
-                                Spacer()
-                                Picker("PUAF Pages", systemImage: "doc", selection: $pUaFPages) {
-                                    Text("16").tag(16.0)
-                                    Text("32").tag(32.0)
-                                    Text("64").tag(64.0)
-                                    Text("128").tag(128.0)
-                                    Text("256").tag(256.0)
-                                    Text("512").tag(512.0)
-                                    Text("1024").tag(1024.0)
-                                    Text("2048").tag(2048.0)
-                                    Text("3072").tag(3072.0)
-                                    Text("4096").tag(4096.0)
-                                    Text("65536").tag(65536.0)
-                                }
-                                .labelsHidden()
-                            }
+                            
                             let memSizeMB = getPhysicalMemorySize() / 1048576
                             HStack {
                                 Label("Static Headroom", systemImage: "memorychip")
@@ -203,12 +186,17 @@ struct CoolerContentView: View {
             .navigationTitle("Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("", systemImage: "xmark") {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
                         settingsOpen = false
                         withAnimation(fancyAnimation) {
                             blurScreen = false
-                        }
+                        } label: {
+        Image(systemName: "keyboard")
+            .foregroundColor(.blue).padding(4)     // << here !!
+    }
+    .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
+    .border(.red, width: 1)
                     }
                     .font(.system(size: 15))
                     .tint(Color(UIColor.label))
@@ -305,12 +293,17 @@ struct CoolerContentView: View {
                                             }
                                         }
                                     Divider()
-                                    Button("More Settings", systemImage: "gear") {
+                                    Button {
                                         UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 200)
                                         settingsOpen.toggle()
                                         withAnimation(fancyAnimation) {
                                             blurScreen = true
-                                        }
+                                        } label: {
+        Image(systemName: "keyboard")
+            .foregroundColor(.blue).padding(4)     // << here !!
+    }
+    .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
+    .border(.red, width: 1)
                                     }
                                     .padding(.top, 5)
                                 }
