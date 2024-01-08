@@ -28,19 +28,19 @@ jobs:
         chmod +x /usr/local/bin/ct_bypass
 
     - name: Install ldid
-    if: always()
+      if: always()
       run: |
         brew unlink ldid
         brew install ldid-procursus
 
     - name: Compile IPA
-    if: always()
+      if: always()
       run: |
         export THEOS=/Users/runner/theos
         make
 
     - name: Upload IPA
-    if: always()
+      if: always()
       uses: actions/upload-artifact@v2
       with:
         name: Serotonin.tipa
