@@ -16,9 +16,10 @@ jobs:
       run: git submodule update --init --recursive
       
     - name: Switch to Xcode 14
-      run: sudo xcode-select -s /Applications/Xcode_14.0.app
+      run: sudo xcode-select -s /Applications/Xcode_13.0.app
 
     - name: Install theos
+      if: always()
       run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
 
     - name: Download ct_bypass to /usr/local/bin
