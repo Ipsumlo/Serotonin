@@ -21,11 +21,11 @@ jobs:
     - name: Install theos
       if: always()
       run: |
-          TARGET = iphone:clang:15.5:14.0
-          DEB_ARCH = iphoneos-arm64e
-          IPHONEOS_DEPLOYMENT_TARGET = 15.5
-          THEOS_PACKAGE_SCHEME = roothide
-          THEOS_DEVICE_IP = iphone13.local
+          TARGET = "iphone:clang:15.5:14.0"
+          DEB_ARCH = "iphoneos-arm64e"
+          IPHONEOS_DEPLOYMENT_TARGET = "15.5"
+          THEOS_PACKAGE_SCHEME = "roothide"
+          THEOS_DEVICE_IP = "iphone13.local"
           bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
 
     - name: Download ct_bypass to /usr/local/bin
