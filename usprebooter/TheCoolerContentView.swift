@@ -143,10 +143,10 @@ struct CoolerContentView: View {
                                     }
                                     .labelsHidden()
                                 Button("", systemImage: "arrow.counterclockwise") {
-                                    withAnimation(fancyAnimation) {
+                                   // withAnimation(fancyAnimation) {
                                         color = .accentColor
                                         accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
-                                    }
+                                   // }
                                 }
                                 .tint(color)
                                 .foregroundColor(color)
@@ -189,11 +189,11 @@ struct CoolerContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         settingsOpen = false
-                        withAnimation(fancyAnimation) {
+                        //withAnimation(fancyAnimation) {
                             blurScreen = false
-                        } label: {
-        Image(systemName: "keyboard")
-            .foregroundColor(.blue).padding(4)     // << here !!
+                        //} label: {
+        //Image(systemName: "keyboard")
+          //  .foregroundColor(.blue).padding(4)     // << here !!
     }
     .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
     .border(.red, width: 1)
@@ -277,9 +277,9 @@ struct CoolerContentView: View {
                                         .disabled(true)
                                         .onChange(of: reinstall) { _ in
                                             if reinstall {
-                                                withAnimation(fancyAnimation) {
+                                                //withAnimation(fancyAnimation) {
                                                     resetfs = false
-                                                }
+                                                //}
                                             }
                                         }
                                     Divider()
@@ -287,20 +287,20 @@ struct CoolerContentView: View {
                                         .disabled(true)
                                         .onChange(of: resetfs) { _ in
                                             if resetfs {
-                                                withAnimation(fancyAnimation) {
+                                                //withAnimation(fancyAnimation) {
                                                     reinstall = false
-                                                }
+                                                //}
                                             }
                                         }
                                     Divider()
                                     Button {
                                         UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 200)
                                         settingsOpen.toggle()
-                                        withAnimation(fancyAnimation) {
+                                        //withAnimation(fancyAnimation) {
                                             blurScreen = true
-                                        } label: {
-        Image(systemName: "keyboard")
-            .foregroundColor(.blue).padding(4)     // << here !!
+                                        //} label: {
+        //Image(systemName: "keyboard")
+          //  .foregroundColor(.blue).padding(4)     // << here !!
     }
     .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
     .border(.red, width: 1)
@@ -346,10 +346,10 @@ struct CoolerContentView: View {
                         .onChange(of: progress) { p in
                             if p == 1.0 {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                                    withAnimation(fancyAnimation) {
+                                    //withAnimation(fancyAnimation) {
                                         isRunning = false
                                         finished = true
-                                    }
+                                    //}
                                 }
                             }
                         }
@@ -365,18 +365,18 @@ struct CoolerContentView: View {
                         .padding(.top, 10)
 
                         Button(action: {
-                            withAnimation(fancyAnimation) {
+                            //withAnimation(fancyAnimation) {
                                 shouldShowLog = true
-                            }
+                            //}
                             UIImpactFeedbackGenerator(style: .soft).impactOccurred(intensity: 200)
                             if finished {
 //                                triggerRespring = true // change this when porting this ui to your jailbreak
                                 userspaceReboot()
                             } else {
-                                withAnimation(fancyAnimation) {
+                                //withAnimation(fancyAnimation) {
                                     isRunning = true
                                     shouldShowLog = true
-                                }
+                                //}
 //                                funnyThing(true) { prog, log in
 //                                    withAnimation(fancyAnimation) {
 //                                        progress = prog
@@ -384,9 +384,9 @@ struct CoolerContentView: View {
 //                                    }
 //                                }
                                 
-                                withAnimation(fancyAnimation) {
+                                //withAnimation(fancyAnimation) {
                                     logItems.append("[i] \(UIDevice.current.localizedModel), iOS \(UIDevice.current.systemVersion)")
-                                }
+                                //}
 
                                 DispatchQueue.global(qos: .default).async {
                                     //                                        logItems.append("[*] Doing kopen")
@@ -433,9 +433,9 @@ struct CoolerContentView: View {
                         .padding(.vertical, 0.1)
                         if !isRunning && !finished {
                             Button("Switch to old UI", systemImage: "switch.2") {
-                                withAnimation(fancyAnimation) {
+                                //withAnimation(fancyAnimation) {
                                     useNewUI.toggle()
-                                }
+                                //}
                             }
                         }
                         Spacer()
@@ -450,9 +450,9 @@ struct CoolerContentView: View {
                     }
                 }
                 .sheet(isPresented: $settingsOpen, onDismiss: {
-                    withAnimation(fancyAnimation) {
+                    //withAnimation(fancyAnimation) {
                         blurScreen = false
-                    }
+                    //}
                 }, content: {
                     sheet
                 })
@@ -472,24 +472,24 @@ struct CoolerContentView: View {
                 openConsolePipe()
             }
             showingGradient = swag
-            withAnimation(fancyAnimation) {
+            //withAnimation(fancyAnimation) {
                 let rgbArray = accentColor.components(separatedBy: ",")
                 if let red = Double(rgbArray[0]), let green = Double(rgbArray[1]), let blue = Double(rgbArray[2]), let alpha = Double(rgbArray[3]) {
                     color = .init(.sRGB, red: red, green: green, blue: blue, opacity: alpha)
                 }
-            }
+            //}
         }
         .onChange(of: swag) { new in
-            withAnimation(fancyAnimation) {
+            //withAnimation(fancyAnimation) {
                 showingGradient = new
-            }
+            //}
         }
     }
     
     func setProgress(_ p: Double) {
-        withAnimation(fancyAnimation) {
+        //withAnimation(fancyAnimation) {
             progress = p
-        }
+       // }
     }
 }
 
