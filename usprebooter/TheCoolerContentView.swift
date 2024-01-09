@@ -192,9 +192,7 @@ struct CoolerContentView: View {
                         settingsOpen = false
                         withAnimation {
                             blurScreen = false
-                        } label: {
-        Image(systemName: "keyboard")
-            .foregroundColor(.blue).padding(4)     // << here !!
+                        } 
     }
     .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
     .border(.red, width: 1)
@@ -464,7 +462,6 @@ struct CoolerContentView: View {
         .onChange(of: color) { new in
             accentColor = updateCardColorInAppStorage(color: new)
         }
-        .animation(fancyAnimation, value: logItems)
         .onAppear {
             if accentColor == "" {
                 accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
