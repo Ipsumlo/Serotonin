@@ -354,7 +354,7 @@ struct CoolerContentView: View {
                         }
                         .padding(.top, 10)
 
-                        Button(role:"4", action: {
+                        Button( action: {
                             withAnimation {
                                 shouldShowLog = true
                             }
