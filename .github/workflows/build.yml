@@ -51,6 +51,9 @@ jobs:
       if: always()
       run: |
         export THEOS=/Users/runner/theos
+        export TARGET = iphone:clang:15.5:14.0
+        export IPHONEOS_DEPLOYMENT_TARGET = 15.5
+        export THEOS_DEVICE_IP = iphone13.local
         make
 
     - name: Upload IPA
