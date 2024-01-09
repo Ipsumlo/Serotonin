@@ -198,7 +198,7 @@ struct CoolerContentView: View {
                 }
             }
         }
-    }
+    
 
     @ViewBuilder
     var sheet: some View {
