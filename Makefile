@@ -2,7 +2,7 @@ CC = clang
 SHELL = /usr/bin/env bash
 LDID = ldid
 MACOSX_SYSROOT = $(shell xcrun -sdk macosx --show-sdk-path)
-TARGET_SYSROOT = $(shell xcrun -sdk iphoneos15.5 --show-sdk-path)
+TARGET_SYSROOT = $(shell xcrun -sdk iPhoneOS15.5 --show-sdk-path)
 
 
 all: Serotonin.tipa
@@ -35,7 +35,7 @@ Serotonin.tipa: $(wildcard **/*.c **/*.m **/*.swift **/*.plist **/*.xml)
 	cp RootHelperSample/Exploits/fastPathSign/fastPathSign ChOma/output/ios/tests
 	
 	echo "[*] Building Serotonin"
-	xcodebuild clean build -project Serotonin.xcodeproj -sdk iphoneos15.5 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED="NO"
+	xcodebuild clean build -project Serotonin.xcodeproj -sdk iPhoneOS15.5 -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED="NO"
 	
 	echo "[*] Done building. Packaging for TS..."
 	$(MAKE) -C RootHelperSample
