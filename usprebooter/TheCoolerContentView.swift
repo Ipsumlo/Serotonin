@@ -299,9 +299,9 @@ struct CoolerContentView: View {
                                 }
                                 .padding()
                             }
-                            .clipShape(RoundedRectangle(cornerRadius: 14))
+                            //.clipShape(RoundedRectangle(cornerRadius: 14))
                             .frame(width: geo.size.width / 1.5, height: geo.size.height / 6.5)
-                            .padding(.vertical)
+                            //.padding(.vertical)
                         }
 
                         ZStack {
