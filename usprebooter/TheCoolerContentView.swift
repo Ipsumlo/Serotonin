@@ -115,7 +115,7 @@ struct CoolerContentView: View {
 //                                Toggle("Hide environment", systemImage: "eye.slash", isOn: $hide)
 //                            }
 //                            .disabled(true)
-                            Toggle("Show output (recommended)", systemImage: "terminal", isOn: $showStdout)
+                            Toggle("Show output (recommended)", isOn: $showStdout)
                         }
                         .toggleStyle(SwitchToggleStyle())
                         .padding(15)
@@ -148,7 +148,7 @@ struct CoolerContentView: View {
                                 .tint(color)
                                 .foregroundColor(color)
                             }
-                            Toggle("Swag Mode", systemImage: "flame", isOn: $swag)
+                            Toggle("Swag Mode", isOn: $swag)
                             if #available(iOS 16.0, *) {
                                 Picker("Theme", selection: $theme, content: {
                                     Text("Default")
@@ -289,9 +289,7 @@ struct CoolerContentView: View {
                                         settingsOpen.toggle()
                                         withAnimation {
                                             blurScreen = true
-                                        } label: {
-        Image(systemName: "keyboard")
-            .foregroundColor(.blue).padding(4)     // << here !!
+                                        } //?
     }
     .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
     .border(.red, width: 1)
