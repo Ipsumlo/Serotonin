@@ -139,7 +139,7 @@ struct CoolerContentView: View {
                                         accentColor = updateCardColorInAppStorage(color: color)
                                     }
                                     .labelsHidden()
-                                Button(action:{
+                                Button("1",action:{
                                     withAnimation {
                                         color = .accentColor
                                         accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
@@ -184,7 +184,7 @@ struct CoolerContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action:{
+                    Button("2",action:{
                         settingsOpen = false
                         withAnimation {
                             blurScreen = false
@@ -285,7 +285,7 @@ struct CoolerContentView: View {
                                             }
                                         }
                                     Divider()
-                                    Button(action :{
+                                    Button("5", action :{
                                         UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 200)
                                         settingsOpen.toggle()
                                         withAnimation {
@@ -354,7 +354,7 @@ struct CoolerContentView: View {
                         }
                         .padding(.top, 10)
 
-                        Button(action: {
+                        Button("4", action: {
                             withAnimation {
                                 shouldShowLog = true
                             }
@@ -422,11 +422,11 @@ struct CoolerContentView: View {
                         .controlSize(.large)
                         .padding(.vertical, 0.1)
                         if !isRunning && !finished {
-                            Button {
+                            Button("3",action:{
                                 withAnimation {
                                     useNewUI.toggle()
                                 }
-                            }
+                            })
                         }
                         Spacer()
                     }
@@ -477,7 +477,8 @@ struct CoolerContentView: View {
     
     func setProgress(_ p: Double) {
         withAnimation {
-            progress = p
+           // progres = p
+                    var red: CGFloat = 0
         }
     }
 }
