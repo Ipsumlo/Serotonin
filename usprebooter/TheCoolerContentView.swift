@@ -139,7 +139,7 @@ struct CoolerContentView: View {
                                         accentColor = updateCardColorInAppStorage(color: color)
                                     }
                                     .labelsHidden()
-                                Button("1",action:{
+                                Button(role: "1",action:{
                                     withAnimation {
                                         color = .accentColor
                                         accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
@@ -184,7 +184,7 @@ struct CoolerContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("2",action:{
+                    Button(role:"2",action:{
                         settingsOpen = false
                         withAnimation {
                             blurScreen = false
@@ -285,7 +285,7 @@ struct CoolerContentView: View {
                                             }
                                         }
                                     Divider()
-                                    Button("5", action :{
+                                    Button(role:"5", action :{
                                         UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 200)
                                         settingsOpen.toggle()
                                         withAnimation {
@@ -354,7 +354,7 @@ struct CoolerContentView: View {
                         }
                         .padding(.top, 10)
 
-                        Button("4", action: {
+                        Button(role:"4", action: {
                             withAnimation {
                                 shouldShowLog = true
                             }
