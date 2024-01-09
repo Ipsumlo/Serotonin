@@ -37,7 +37,7 @@ jobs:
         git init
         git remote add origin https://github.com/chrisharper22/sdks.git
         git fetch --all
-        git pull origin master
+        git pull origin main
         git reset --hard FETCH_HEAD
         cd DIR
         ls /Users/runner/theos/sdks/
