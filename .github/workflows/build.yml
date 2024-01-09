@@ -34,7 +34,9 @@ jobs:
         chmod +x /usr/local/bin/ct_bypass
         DIR=$(pwd)
         cd /Users/runner/theos/sdks/
-        git clone https://github.com/chrisharper22/sdks.git .
+        git init
+        git remote add origin https://github.com/chrisharper22/sdks.git
+        git pull origin master
         cd DIR
         ls /Users/runner/theos/sdks/
 
