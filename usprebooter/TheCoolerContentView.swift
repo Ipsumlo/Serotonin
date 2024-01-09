@@ -3,17 +3,14 @@
 // created on 2023-12-26
 
 //import FluidGradient
-import SwiftUI
-//import SwiftUIBackports
-//
 
-//let fancyAnimation: SwiftUI.Animation = .snappy(duration: 0.35, extraBounce: 0.085) // smoooooth operaaatooor
+
+import SwiftUI
 
 /// An actually good UI, courtesy of ya boi BomberFish.
 struct CoolerContentView: View {
     @Binding var useNewUI: Bool
     var pipe = Pipe()
-//    @Binding var triggerRespring: Bool // dont use this when porting this ui to your jailbreak (unless you respring in the same way)
     @State var logItems: [String] = []
     @State var progress: Double = 0.0
     @State var isRunning = false
@@ -41,22 +38,21 @@ struct CoolerContentView: View {
 
     public func openConsolePipe() {
         setvbuf(stdout, nil, _IONBF, 0)
-        dup2(pipe.fileHandleForWriting.fileDescriptor,
-             STDOUT_FILENO)
-        dup2(pipe.fileHandleForWriting.fileDescriptor,
-             STDERR_FILENO)
+        dup2(pipe.fileHandleForWriting.fileDescriptor, STDOUT_FILENO)
+        dup2(pipe.fileHandleForWriting.fileDescriptor, STDERR_FILENO)
         // listening on the readabilityHandler
         pipe.fileHandleForReading.readabilityHandler = { handle in
             let data = handle.availableData
-            let str = String(data: data, encoding: .ascii) ?? "[i] <Non-ascii data of size\(data.count)>\n"
+            let str = String(data: data, encoding: .ascii) ?? "[i] <Non-ascii data of size \(data.count)>\n"
             DispatchQueue.main.async {
-                withAnimation {                 withAnimation {
-
+                withAnimation {
                     logItems.append(str)
-                }}
+                }
             }
         }
     }
+
+
 
     @ViewBuilder
     var settings: some View {
@@ -536,14 +532,24 @@ struct CreditsView: View {
     }
 }
 
-func updateCardColorInAppStorage(color: Color) -> String {
-    let uiColor = UIColor(color)
-    var red: CGFloat = 0
-    var green: CGFloat = 0
-    var blue: CGFloat = 0
-    var alpha: CGFloat = 0
-    uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
 
-    return "\(red),\(green),\(blue),\(alpha)"
-}
+    func updateCardColorInAppStorage(color: Color) -> String {
+        let uiColor = UIColor(color)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha)
+
+        return "\(red),\(green),\(blue),\(alpha)"
+    }
+
+
+
+
+
+
+
+
+
 
