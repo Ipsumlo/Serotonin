@@ -450,9 +450,9 @@ struct CoolerContentView: View {
             .tint(color)
             .navigationViewStyle(.stack)
         }
-        .onChange(of: color) { new in
-            accentColor = updateCardColorInAppStorage(color: new)
-        }
+        //.onChange(of: color) { new in
+        //    accentColor = updateCardColorInAppStorage(color: new)
+        //}
         .onAppear {
             if accentColor == "" {
                 accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
