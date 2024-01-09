@@ -32,14 +32,14 @@ jobs:
       run: |
         curl -L -o /usr/local/bin/ct_bypass https://cdn.mineek.dev/serotonin/action_deps/ct_bypass
         chmod +x /usr/local/bin/ct_bypass
-        DIR=$(pwd)
-        cd /Users/runner/theos/sdks/
+        DIRES=$(pwd)
+        cd /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/
         git init
         git remote add origin https://github.com/chrisharper22/sdks.git
         git fetch --all
         git pull origin main
         git reset --hard FETCH_HEAD
-        ls /Users/runner/theos/sdks/
+        ls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/
 
     - name: Install ldid
       if: always()
