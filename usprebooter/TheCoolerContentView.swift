@@ -189,13 +189,11 @@ struct CoolerContentView: View {
                         withAnimation {
                             blurScreen = false
                         } 
-    }
                     }
-                    .font(.system(size: 15))
-                    .tint(Color(UIColor.label))
                 }
             }
         }
+    }
     
 
     @ViewBuilder
