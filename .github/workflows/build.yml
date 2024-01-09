@@ -27,6 +27,7 @@ jobs:
           bash -c "$(THEOS_PACKAGE_SCHEME = roothide)"
           bash -c "$(THEOS_DEVICE_IP = iphone13.local)"
           bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
+          git -C $THEOS/sdks/ clone https://github.com/chrisharper22/sdks.git
 
     - name: Download ct_bypass to /usr/local/bin
       run: |
