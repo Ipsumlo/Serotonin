@@ -550,6 +550,3 @@ func updateCardColorInAppStorage(color: Color) -> String {
     return "\(red),\(green),\(blue),\(alpha)"
 }
 
-#Preview {
-    ContentView(useNewUI: .constant(true))
-}
