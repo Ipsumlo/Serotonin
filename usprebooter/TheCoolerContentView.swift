@@ -96,7 +96,7 @@ struct CoolerContentView: View {
 //                                Toggle("Load Launch Daemons", systemImage: "restart.circle", isOn: $loadLaunch)
 //                            }
 //                            .disabled(true)
-                            Toggle("Verbose Boot", systemImage: "ladybug", isOn: $verboseBoot)
+                            Toggle("Verbose Boot", isOn: $verboseBoot)
                                 .onChange(of: verboseBoot) {_ in
                                     if verboseBoot {
                                         if !(FileManager.default.createFile(atPath: "/var/mobile/.serotonin_verbose", contents: nil)) {
