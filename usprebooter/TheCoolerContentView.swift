@@ -139,14 +139,14 @@ struct CoolerContentView: View {
                                         accentColor = updateCardColorInAppStorage(color: color)
                                     }
                                     .labelsHidden()
-                                Button {
+                                Button(action:{
                                     withAnimation {
                                         color = .accentColor
                                         accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
                                     }
-                                }
-                                .tint(color)
-                                .foregroundColor(color)
+                                })
+                                //.tint(color)
+                                //.foregroundColor(color)
                             }
                             Toggle("Swag Mode", isOn: $swag)
                             if #available(iOS 16.0, *) {
@@ -184,13 +184,13 @@ struct CoolerContentView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button {
+                    Button(action:{
                         settingsOpen = false
                         withAnimation {
                             blurScreen = false
                         } 
-                    } .tint(color)
-                                .foregroundColor(color)
+                    })//.tint(color)
+                                //.foregroundColor(color)
                 }
             }
         }
@@ -285,15 +285,15 @@ struct CoolerContentView: View {
                                             }
                                         }
                                     Divider()
-                                    Button {
+                                    Button(action :{
                                         UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 200)
                                         settingsOpen.toggle()
                                         withAnimation {
                                             blurScreen = true
                                         } //?
-    }
-    .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
-    .border(.red, width: 1)
+    })
+  //  .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
+    //.border(.red, width: 1)
                                     }
                                     .padding(.top, 5)
                                 }
