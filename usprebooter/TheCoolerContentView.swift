@@ -139,7 +139,7 @@ struct CoolerContentView: View {
                                         accentColor = updateCardColorInAppStorage(color: color)
                                     }
                                     .labelsHidden()
-                                Button("", systemImage: "arrow.counterclockwise") {
+                                Button {
                                     withAnimation {
                                         color = .accentColor
                                         accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
@@ -189,7 +189,8 @@ struct CoolerContentView: View {
                         withAnimation {
                             blurScreen = false
                         } 
-                    }
+                    } .tint(color)
+                                .foregroundColor(color)
                 }
             }
         }
@@ -421,7 +422,7 @@ struct CoolerContentView: View {
                         .controlSize(.large)
                         .padding(.vertical, 0.1)
                         if !isRunning && !finished {
-                            Button("Switch to old UI", systemImage: "switch.2") {
+                            Button {
                                 withAnimation {
                                     useNewUI.toggle()
                                 }
