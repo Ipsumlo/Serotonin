@@ -453,21 +453,21 @@ struct CoolerContentView: View {
         //.onChange(of: color) { new in
         //    accentColor = updateCardColorInAppStorage(color: new)
         //}
-        .onAppear {
-            if accentColor == "" {
-                accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
-            }
-            if showStdout {
-                openConsolePipe()
-            }
-            showingGradient = swag
-            withAnimation {
-                let rgbArray = accentColor.components(separatedBy: ",")
-                if let red = Double(rgbArray[0]), let green = Double(rgbArray[1]), let blue = Double(rgbArray[2]), let alpha = Double(rgbArray[3]) {
-                    color = .init(.sRGB, red: red, green: green, blue: blue, opacity: alpha)
-                }
-            }
-        }
+        //.onAppear {
+        //    if accentColor == "" {
+        //        accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
+        //    }
+        //    if showStdout {
+        //        openConsolePipe()
+        //    }
+        //   showingGradient = swag
+        //    withAnimation {
+        //        let rgbArray = accentColor.components(separatedBy: ",")
+        //        if let red = Double(rgbArray[0]), let green = Double(rgbArray[1]), let blue = Double(rgbArray[2]), let alpha = Double(rgbArray[3]) {
+        //            color = .init(.sRGB, red: red, green: green, blue: blue, opacity: alpha)
+        //        }
+        //    }
+       // }
         //.onChange(of: swag) { new in
          //   withAnimation {
          //       showingGradient = new
