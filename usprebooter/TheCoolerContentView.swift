@@ -468,11 +468,11 @@ struct CoolerContentView: View {
                 }
             }
         }
-        .onChange(of: swag) { new in
-            withAnimation {
-                showingGradient = new
-            }
-        }
+        //.onChange(of: swag) { new in
+         //   withAnimation {
+         //       showingGradient = new
+         //   }
+        //}
     }
     
     func setProgress(_ p: Double) {
@@ -481,7 +481,7 @@ struct CoolerContentView: View {
                     var red: CGFloat = 0
         }
     }
-}
+//}
 
 struct LinkCell: View {
     var title: String
