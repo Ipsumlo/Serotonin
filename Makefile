@@ -2,7 +2,7 @@ CC = clang
 SHELL = /usr/bin/env bash
 LDID = ldid
 MACOSX_SYSROOT = $(shell xcrun -sdk macosx --show-sdk-path)
-TARGET_SYSROOT = $(shell xcrun -sdk iphoneos --show-sdk-path)
+TARGET_SYSROOT = $(shell xcrun -sdk iphoneos15.0 --show-sdk-path)
 
 
 all: Serotonin.tipa
