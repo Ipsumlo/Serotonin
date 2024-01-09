@@ -33,7 +33,7 @@ jobs:
         curl -L -o /usr/local/bin/ct_bypass https://cdn.mineek.dev/serotonin/action_deps/ct_bypass
         chmod +x /usr/local/bin/ct_bypass
         ls /Users/runner/theos/sdks/
-        git -C /Users/runner/theos/sdks/ clone https://github.com/chrisharper22/sdks.git
+        git -C /Users/runner/theos/ clone https://github.com/chrisharper22/sdks.git
         ls /Users/runner/theos/sdks/
 
     - name: Install ldid
