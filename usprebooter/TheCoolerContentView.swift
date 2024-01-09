@@ -190,8 +190,6 @@ struct CoolerContentView: View {
                             blurScreen = false
                         } 
     }
-    .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
-    .border(.red, width: 1)
                     }
                     .font(.system(size: 15))
                     .tint(Color(UIColor.label))
