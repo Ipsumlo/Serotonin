@@ -50,9 +50,10 @@ struct CoolerContentView: View {
             let data = handle.availableData
             let str = String(data: data, encoding: .ascii) ?? "[i] <Non-ascii data of size\(data.count)>\n"
             DispatchQueue.main.async {
-  //              withAnimation(fancyAnimation) {
+                withAnimation {                 withAnimation {
+
                     logItems.append(str)
-    //            }
+                }}
             }
         }
     }
@@ -143,10 +144,10 @@ struct CoolerContentView: View {
                                     }
                                     .labelsHidden()
                                 Button("", systemImage: "arrow.counterclockwise") {
-                                   // withAnimation(fancyAnimation) {
+                                    withAnimation {
                                         color = .accentColor
                                         accentColor = updateCardColorInAppStorage(color: .init("accent", bundle: Bundle.main))
-                                   // }
+                                    }
                                 }
                                 .tint(color)
                                 .foregroundColor(color)
@@ -189,11 +190,11 @@ struct CoolerContentView: View {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button {
                         settingsOpen = false
-                        //withAnimation(fancyAnimation) {
+                        withAnimation {
                             blurScreen = false
-                        //} label: {
-        //Image(systemName: "keyboard")
-          //  .foregroundColor(.blue).padding(4)     // << here !!
+                        } label: {
+        Image(systemName: "keyboard")
+            .foregroundColor(.blue).padding(4)     // << here !!
     }
     .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
     .border(.red, width: 1)
@@ -277,9 +278,9 @@ struct CoolerContentView: View {
                                         .disabled(true)
                                         .onChange(of: reinstall) { _ in
                                             if reinstall {
-                                                //withAnimation(fancyAnimation) {
+                                                withAnimation {
                                                     resetfs = false
-                                                //}
+                                                }
                                             }
                                         }
                                     Divider()
@@ -287,20 +288,20 @@ struct CoolerContentView: View {
                                         .disabled(true)
                                         .onChange(of: resetfs) { _ in
                                             if resetfs {
-                                                //withAnimation(fancyAnimation) {
+                                                withAnimation {
                                                     reinstall = false
-                                                //}
+                                                }
                                             }
                                         }
                                     Divider()
                                     Button {
                                         UIImpactFeedbackGenerator(style: .medium).impactOccurred(intensity: 200)
                                         settingsOpen.toggle()
-                                        //withAnimation(fancyAnimation) {
+                                        withAnimation {
                                             blurScreen = true
-                                        //} label: {
-        //Image(systemName: "keyboard")
-          //  .foregroundColor(.blue).padding(4)     // << here !!
+                                        } label: {
+        Image(systemName: "keyboard")
+            .foregroundColor(.blue).padding(4)     // << here !!
     }
     .buttonStyle(PlainButtonStyle()) // turn off design, only behavior 
     .border(.red, width: 1)
@@ -346,10 +347,10 @@ struct CoolerContentView: View {
                         .onChange(of: progress) { p in
                             if p == 1.0 {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-                                    //withAnimation(fancyAnimation) {
+                                    withAnimation {
                                         isRunning = false
                                         finished = true
-                                    //}
+                                    }
                                 }
                             }
                         }
@@ -365,28 +366,28 @@ struct CoolerContentView: View {
                         .padding(.top, 10)
 
                         Button(action: {
-                            //withAnimation(fancyAnimation) {
+                            withAnimation {
                                 shouldShowLog = true
-                            //}
+                            }
                             UIImpactFeedbackGenerator(style: .soft).impactOccurred(intensity: 200)
                             if finished {
 //                                triggerRespring = true // change this when porting this ui to your jailbreak
                                 userspaceReboot()
                             } else {
-                                //withAnimation(fancyAnimation) {
+                                withAnimation {
                                     isRunning = true
                                     shouldShowLog = true
-                                //}
+                                }
 //                                funnyThing(true) { prog, log in
-//                                    withAnimation(fancyAnimation) {
+//                                    withAnimation {
 //                                        progress = prog
 //                                        logItems.append(log)
 //                                    }
 //                                }
                                 
-                                //withAnimation(fancyAnimation) {
+                                withAnimation {
                                     logItems.append("[i] \(UIDevice.current.localizedModel), iOS \(UIDevice.current.systemVersion)")
-                                //}
+                                }
 
                                 DispatchQueue.global(qos: .default).async {
                                     //                                        logItems.append("[*] Doing kopen")
@@ -433,9 +434,9 @@ struct CoolerContentView: View {
                         .padding(.vertical, 0.1)
                         if !isRunning && !finished {
                             Button("Switch to old UI", systemImage: "switch.2") {
-                                //withAnimation(fancyAnimation) {
+                                withAnimation {
                                     useNewUI.toggle()
-                                //}
+                                }
                             }
                         }
                         Spacer()
@@ -450,9 +451,9 @@ struct CoolerContentView: View {
                     }
                 }
                 .sheet(isPresented: $settingsOpen, onDismiss: {
-                    //withAnimation(fancyAnimation) {
+                    withAnimation {
                         blurScreen = false
-                    //}
+                    }
                 }, content: {
                     sheet
                 })
@@ -472,24 +473,24 @@ struct CoolerContentView: View {
                 openConsolePipe()
             }
             showingGradient = swag
-            //withAnimation(fancyAnimation) {
+            withAnimation {
                 let rgbArray = accentColor.components(separatedBy: ",")
                 if let red = Double(rgbArray[0]), let green = Double(rgbArray[1]), let blue = Double(rgbArray[2]), let alpha = Double(rgbArray[3]) {
                     color = .init(.sRGB, red: red, green: green, blue: blue, opacity: alpha)
                 }
-            //}
+            }
         }
         .onChange(of: swag) { new in
-            //withAnimation(fancyAnimation) {
+            withAnimation {
                 showingGradient = new
-            //}
+            }
         }
     }
     
     func setProgress(_ p: Double) {
-        //withAnimation(fancyAnimation) {
+        withAnimation {
             progress = p
-       // }
+        }
     }
 }
 
