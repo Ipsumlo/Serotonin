@@ -58,7 +58,7 @@ struct ContentView: View {
                 .opacity(0.5)
         }
         Button("Back to new UI") {
-            withAnimation(fancyAnimation) {
+            withAnimation {
                 useNewUI.toggle()
             }
         }
