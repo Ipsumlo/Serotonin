@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e # why wasn't this there earlier – bomberfish
 echo "Building IPA"
-#xcodebuild clean build -sdk iphoneos -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED="NO" SDKROOT="iphoneos15.5"
+xcodebuild clean build -sdk iphoneos -configuration Release CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO CODE_SIGNING_ALLOWED="NO" SDKROOT="iphoneos15.5"
 echo "done building"
 cd RootHelperSample
 ldid -Sentitlements.plist -Cadhoc ../usprebooter/ldid
