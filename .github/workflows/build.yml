@@ -21,11 +21,6 @@ jobs:
     - name: Install theos
       if: always()
       run: |
-          bash -c "$(TARGET = iphone:clang:15.5:14.0)"
-          bash -c "$(DEB_ARCH = iphoneos-arm64e)"
-          bash -c "$(IPHONEOS_DEPLOYMENT_TARGET = 15.5)"
-          bash -c "$(THEOS_PACKAGE_SCHEME = roothide)"
-          bash -c "$(THEOS_DEVICE_IP = iphone13.local)"
           bash -c "$(curl -fsSL https://raw.githubusercontent.com/roothide/theos/master/bin/install-theos)"
         
     - name: Download ct_bypass to /usr/local/bin
@@ -57,8 +52,6 @@ jobs:
       run: |
         /usr/libexec/PlistBuddy -c "Set :MinimumSDKVersion 14.4"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
         export THEOS=/Users/runner/theos
-        export THEOS_DEVICE_IP=iphone13.local
-        export SDKROOT=$(xcrun -sdk iphoneos --show-sdk-path)
         make
 
     - name: Upload IPA
