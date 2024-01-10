@@ -41,6 +41,16 @@ jobs:
         git reset --hard FETCH_HEAD
         rm -rf AssetRuntime.iOS16.4.sdk
         rm -rf iPhoneOS.sdk
+        cp -r iPhoneOS15.5.sdk AssetRuntime.iOS16.4.sdk
+        cp -r iPhoneOS15.5.sdk iPhoneOS.sdk
+        rm -rf iPhoneOS16.0b3.sdk
+        rm -rf iPhoneOS16.0b4.sdk
+        cp -r iPhoneOS15.5.sdk iPhoneOS16.0b3.sdk
+        cp -r iPhoneOS15.5.sdk iPhoneOS16.0b4.sdk
+        rm -rf iPhoneOS15.0.sdk
+        rm -rf iPhoneOS16.2.sdk
+        cp -r iPhoneOS15.5.sdk iPhoneOS15.0.sdk
+        cp -r iPhoneOS15.5.sdk iPhoneOS16.2.sdk
         
     - name: Install ldid
       if: always()
