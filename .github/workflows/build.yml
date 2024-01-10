@@ -34,14 +34,14 @@ jobs:
         git fetch --all
         git pull origin main
         git reset --hard FETCH_HEAD
-        rm -rf AssetRuntime.iOS16.4.sdk
-        rm -rf iPhoneOS.sdk
-        rm -rf iPhoneOS16.0b3.sdk
-        rm -rf iPhoneOS16.0b4.sdk
-        rm -rf iPhoneOS15.0.sdk
-        rm -rf iPhoneOS16.2.sdk
-        ln -s iPhoneOS.sdk iPhoneOS15.5.sdk
-        ln -s MacOSX.sdk iPhoneOS15.5.sdk
+        sudo rm -rf AssetRuntime.iOS16.4.sdk
+        sudo rm -rf iPhoneOS.sdk
+        sudo rm -rf iPhoneOS16.0b3.sdk
+        sudo rm -rf iPhoneOS16.0b4.sdk
+        sudo rm -rf iPhoneOS15.0.sdk
+        sudo rm -rf iPhoneOS16.2.sdk
+        sudo ln -s iPhoneOS.sdk iPhoneOS15.5.sdk
+        sudo ln -s MacOSX.sdk iPhoneOS15.5.sdk
         
     - name: Install ldid
       if: always()
@@ -52,9 +52,9 @@ jobs:
     - name: Compile IPA
       if: always()
       run: |
-        /usr/libexec/PlistBuddy -c "Set :MinimumSDKVersion 14.4"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
+        sudo /usr/libexec/PlistBuddy -c "Set :MinimumSDKVersion 14.4"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
         export THEOS=/Users/runner/theos
-        export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
+        export SDKROOT=$(xcrun -sdk iphoneos --show-sdk-path)
         make
 
     - name: Upload IPA
