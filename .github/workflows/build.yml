@@ -54,7 +54,7 @@ jobs:
       run: |
         sudo /usr/libexec/PlistBuddy -c "Set :MinimumSDKVersion 14.4"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
         export THEOS=/Users/runner/theos
-        export SDKROOT=$(xcrun -sdk iphoneos --show-sdk-path)
+        export SDKROOT=$(xcrun -sdk macosx --show-sdk-path)
         make
 
     - name: Upload IPA
