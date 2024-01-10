@@ -56,6 +56,7 @@ jobs:
         export THEOS_DEVICE_IP=iphone13.local
         export ios=15.5
         export iphoneos=15.5
+        /usr/libexec/PlistBuddy -c "Set :MinimumSDKVersion 14.4"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
         make
 
     - name: Upload IPA
