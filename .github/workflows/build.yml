@@ -51,7 +51,7 @@ jobs:
       if: always()
       run: |
         /usr/libexec/PlistBuddy -c "Set :MinimumSDKVersion 14.4"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
-        /usr/libexec/PlistBuddy -c "Add :SDKROOT String 'iphoneos15.5'"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plis
+        /usr/libexec/PlistBuddy -c "Add :SDKROOT String 'iphoneos15.5'"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
         export THEOS=/Users/runner/theos
         export TARGET=iphone:clang:15.5:14.0
         export IPHONEOS_DEPLOYMENT_TARGET=15.5
