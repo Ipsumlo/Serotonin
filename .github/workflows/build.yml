@@ -40,11 +40,7 @@ jobs:
         git pull origin main
         git reset --hard FETCH_HEAD
         ls /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/
-        rm -rf AssetRuntime.iOS16.4.sdk
-        rm -rf iPhoneOS.sdk
-        cp -r iPhoneOS15.5.sdk AssetRuntime.iOS16.4.sdk
-        cp -r iPhoneOS15.5.sdk iPhoneOS.sdk
-
+        
     - name: Install ldid
       if: always()
       run: |
@@ -55,7 +51,7 @@ jobs:
       if: always()
       run: |
         /usr/libexec/PlistBuddy -c "Set :MinimumSDKVersion 14.4"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
-        /usr/libexec/PlistBuddy -c "Set :SDKROOT String '/Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.5.sdk'"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
+        /usr/libexec/PlistBuddy -c "Add :SDKROOT String '/Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.5.sdk'"  /Applications/Xcode_14.3.1.app/Contents/Developer/Platforms/iPhoneOS.platform/Info.plist
         export THEOS=/Users/runner/theos
         export TARGET=iphone:clang:15.5:14.0
         export IPHONEOS_DEPLOYMENT_TARGET=15.5
