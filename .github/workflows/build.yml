@@ -40,7 +40,7 @@ jobs:
         rm -rf iPhoneOS16.0b4.sdk
         rm -rf iPhoneOS15.0.sdk
         rm -rf iPhoneOS16.2.sdk
-        ln -s iPhoneOS15.5.sdk
+        ln -s iPhoneOS.sdk iPhoneOS15.5.sdk
         
     - name: Install ldid
       if: always()
