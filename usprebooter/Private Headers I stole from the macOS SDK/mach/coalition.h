@@ -1,8 +1,8 @@
 /*
- * Copyright (c) 2013 Apple Inc. All rights reserved.
+ * Copyright (c) 2014 Apple Inc. All rights reserved.
  *
  * @APPLE_OSREFERENCE_LICENSE_HEADER_START@
- * 
+ *
  * This file contains Original Code and/or Modifications of Original Code
  * as defined in and that are subject to the Apple Public Source License
  * Version 2.0 (the 'License'). You may not use this file except in
@@ -11,10 +11,10 @@
  * unlawful or unlicensed copies of an Apple operating system, or to
  * circumvent, violate, or enable the circumvention or violation of, any
  * terms of an Apple operating system software license agreement.
- * 
+ *
  * Please obtain a copy of the License at
  * http://www.opensource.apple.com/apsl/ and read it before using this file.
- * 
+ *
  * The Original Code and all software distributed under the License are
  * distributed on an 'AS IS' basis, WITHOUT WARRANTY OF ANY KIND, EITHER
  * EXPRESS OR IMPLIED, AND APPLE HEREBY DISCLAIMS ALL SUCH WARRANTIES,
@@ -22,216 +22,161 @@
  * FITNESS FOR A PARTICULAR PURPOSE, QUIET ENJOYMENT OR NON-INFRINGEMENT.
  * Please see the License for the specific language governing rights and
  * limitations under the License.
- * 
+ *
  * @APPLE_OSREFERENCE_LICENSE_HEADER_END@
  */
 
-#ifndef _SYS_COALITION_H_
-#define _SYS_COALITION_H_
+#ifndef _MACH_COALITION_H_
+#define _MACH_COALITION_H_
 
-#include <stdint.h>
-#include <sys/cdefs.h>
-#include <sys/types.h>
+/* code shared by userspace and xnu */
 
-#include <mach/coalition.h>
+#define COALITION_CREATE_FLAGS_MASK       ((uint32_t)0xFF1)
+#define COALITION_CREATE_FLAGS_PRIVILEGED ((uint32_t)0x01)
 
-__BEGIN_DECLS
+#define COALITION_CREATE_FLAGS_TYPE_MASK  ((uint32_t)0xF0)
+#define COALITION_CREATE_FLAGS_TYPE_SHIFT (4)
 
-#ifndef KERNEL
-/* Userspace syscall prototypes */
+#define COALITION_CREATE_FLAGS_GET_TYPE(flags) \
+	(((flags) & COALITION_CREATE_FLAGS_TYPE_MASK) >> COALITION_CREATE_FLAGS_TYPE_SHIFT)
 
-/* Syscalls */
-int coalition_create(uint64_t *cid_out, uint32_t flags);
-int coalition_terminate(uint64_t cid, uint32_t flags);
-int coalition_reap(uint64_t cid, uint32_t flags);
+#define COALITION_CREATE_FLAGS_SET_TYPE(flags, type) \
+	do { \
+		flags &= ~COALITION_CREATE_FLAGS_TYPE_MASK; \
+		flags |= (((type) << COALITION_CREATE_FLAGS_TYPE_SHIFT) \
+			   & COALITION_CREATE_FLAGS_TYPE_MASK); \
+	} while (0)
 
-/* Wrappers around __coalition_info syscall (with proper struct types) */
-int coalition_info_resource_usage(uint64_t cid, struct coalition_resource_usage *cru, size_t sz);
-int coalition_info_set_name(uint64_t cid, const char *name, size_t size);
-int coalition_info_set_efficiency(uint64_t cid, uint64_t flags);
+#define COALITION_CREATE_FLAGS_ROLE_MASK  ((uint32_t)0xF00)
+#define COALITION_CREATE_FLAGS_ROLE_SHIFT (8)
 
-#else /* KERNEL */
+#define COALITION_CREATE_FLAGS_GET_ROLE(flags) \
+    (((flags) & COALITION_CREATE_FLAGS_ROLE_MASK) >> COALITION_CREATE_FLAGS_ROLE_SHIFT)
 
-#if CONFIG_COALITIONS
-/* in-kernel BSD interfaces */
-
-/*
- * coalition_id:
- * Get the unique 64-bit identifier associated with the given coalition
- */
-uint64_t coalition_id(coalition_t coal);
-
+#define COALITION_CREATE_FLAGS_SET_ROLE(flags, role) \
+    do { \
+        flags &= ~COALITION_CREATE_FLAGS_ROLE_MASK; \
+        flags |= (((role) << COALITION_CREATE_FLAGS_ROLE_SHIFT) \
+               & COALITION_CREATE_FLAGS_ROLE_MASK); \
+    } while (0)
 
 /*
- * coalitions_get_list:
- * Get a list of coalitions as procinfo_coalinfo structures
- *
- * This interface is primarily to support libproc.
- *
- * Parameters:
- * 	type      : The COALITION_TYPE of the coalitions to investigate.
- * 	            Valid types can be found in <mach/coalition.h>
- * 	coal_list : Pointer to an array of procinfo_coalinfo structures
- * 	            that will be filled with information about each
- * 	            coalition whose type matches 'type'
- * 	            NOTE: This can be NULL to perform a simple query of
- * 	            the total number of coalitions.
- * 	list_sz   : The size (in number of structures) of 'coal_list'
- *
- * Returns: 0 if no coalitions matching 'type' are found
- *          Otherwise: the number of coalitions whose type matches
- *                     the 'type' parameter (all coalitions if type == -1)
+ * Default scheduling policy of the lead/parent task in a coalition
  */
-extern int coalitions_get_list(int type, struct procinfo_coalinfo *coal_list, int list_sz);
+#define COALITION_ROLE_UNDEF       (0)
+#define COALITION_ROLE_SYSTEM      (1)
+#define COALITION_ROLE_BACKGROUND  (2)
+#define COALITION_ROLE_ADAPTIVE    (3)
+#define COALITION_ROLE_INTERACTIVE (4)
+#define COALITION_NUM_ROLES        (5)
 
+#define COALITION_TYPE_RESOURCE  (0)
+#define COALITION_TYPE_JETSAM    (1)
+#define COALITION_TYPE_MAX       (1)
+
+#define COALITION_NUM_TYPES      (COALITION_TYPE_MAX + 1)
+
+#define COALITION_TASKROLE_NONE   (-1) /* task plays no role in the given coalition */
+#define COALITION_TASKROLE_UNDEF  (0)
+#define COALITION_TASKROLE_LEADER (1)
+#define COALITION_TASKROLE_XPC    (2)
+#define COALITION_TASKROLE_EXT    (3)
+
+#define COALITION_NUM_TASKROLES   (4)
+
+#define COALITION_ROLEMASK_ALLROLES ((1 << COALITION_NUM_TASKROLES) - 1)
+#define COALITION_ROLEMASK_UNDEF    (1 << COALITION_TASKROLE_UNDEF)
+#define COALITION_ROLEMASK_LEADER   (1 << COALITION_TASKROLE_LEADER)
+#define COALITION_ROLEMASK_XPC      (1 << COALITION_TASKROLE_XPC)
+#define COALITION_ROLEMASK_EXT      (1 << COALITION_TASKROLE_EXT)
+
+#define COALITION_SORT_NOSORT     (0)
+#define COALITION_SORT_DEFAULT    (1)
+#define COALITION_SORT_MEM_ASC    (2)
+#define COALITION_SORT_MEM_DEC    (3)
+#define COALITION_SORT_USER_ASC   (4)
+#define COALITION_SORT_USER_DEC   (5)
+
+#define COALITION_NUM_SORT        (6)
+
+#define COALITION_NUM_THREAD_QOS_TYPES   7
+
+/* Coalition Efficiency Interface Support */
+
+/* Flags for coalition efficiency */
+#define COALITION_FLAGS_EFFICIENT       (0x1)
 
 /*
- * coalition_is_leader:
- * Determine if a task is a coalition leader.
+ * Mapping of launchd plist values to coalition efficiency flags.
+ * Launchd uses this mapping to pass the correct flags to
+ * coalition_info_set_efficiency(cid, flags);
  *
- * Parameters:
- * 	task      : The task to investigate
- * 	coal_type : The COALITION_TYPE of the coalition to investigate.
- * 	            Valid types can be found in <mach/coalition.h>
- * 	coal      : If 'task' is a valid task, and is a member of a coalition
- * 	            of type 'coal_type', then 'coal' will be filled in with
- * 	            the corresponding coalition_t object.
- * 	            NOTE: This will be filled in whether or not the 'task' is
- * 	                  a leader in the coalition. However, if 'task' is
- * 	                  not a member of a coalition of type 'coal_type' then
- * 	                  'coal' will be filled in with COALITION_NULL.
- * 	            NOTE: This can be NULL
- *
- * Returns: TRUE if 'task' is a coalition leader, FALSE otherwise.
+ * Current supported values mapping:
+ * { "Efficient" : COALITION_FLAGS_EFFICIENT, }
  */
-extern boolean_t coalition_is_leader(task_t task, int coal_type, coalition_t *coal);
+static const char *coalition_efficiency_names[] = {
+    "Efficient",
+};
+static const uint64_t coalition_efficiency_flags[] = {
+    COALITION_FLAGS_EFFICIENT,
+};
 
-/*
- * coalition_get_leader:
- * Get a task reference on the leader of a given coalition
- *
- * Parameters:
- *	coal      : The coalition to investigate
- *
- * Returns: A referenced task pointer of the leader of the given coalition.
- *          This could be TASK_NULL if the coalition doesn't have a leader.
- *          If the return value is non-null, the caller is responsible to call
- *          task_deallocate on the returned value.
- */
-extern task_t coalition_get_leader(coalition_t coal);
+struct coalition_resource_usage {
+	uint64_t tasks_started;
+	uint64_t tasks_exited;
+	uint64_t time_nonempty;
+	uint64_t cpu_time;
+	uint64_t interrupt_wakeups;
+	uint64_t platform_idle_wakeups;
+	uint64_t bytesread;
+	uint64_t byteswritten;
+	uint64_t gpu_time;
+	uint64_t cpu_time_billed_to_me;
+	uint64_t cpu_time_billed_to_others;
+	uint64_t energy;
+	uint64_t logical_immediate_writes;
+	uint64_t logical_deferred_writes;
+	uint64_t logical_invalidated_writes;
+	uint64_t logical_metadata_writes;
+	uint64_t energy_billed_to_me;
+	uint64_t energy_billed_to_others;
+	uint64_t cpu_ptime;
+	uint64_t cpu_time_eqos_len;	/* Stores the number of thread QoS types */
+	uint64_t cpu_time_eqos[COALITION_NUM_THREAD_QOS_TYPES];
+};
 
+#ifdef PRIVATE
+/* definitions shared by only xnu + Libsyscall */
 
-/*
- * coalition_get_task_count:
- * Sum up the number of tasks in the given coalition
- *
- * Parameters:
- * 	coal     : The coalition to investigate
- *
- * Returns: The number of tasks in the coalition
- */
-extern int coalition_get_task_count(coalition_t coal);
+/* Syscall flavors */
+#define COALITION_OP_CREATE 1
+#define COALITION_OP_TERMINATE 2
+#define COALITION_OP_REAP 3
 
-/*
- * coalition_get_page_count:
- * Sum up the page count for each task in the coalition specified by 'coal'
- *
- * Parameters:
- * 	coal     : The coalition to investigate
- * 	ntasks   : If non-NULL, this will be filled in with the number of
- * 	           tasks in the coalition.
- *
- * Returns: The sum of all pages used by all members of the coalition
- */
-extern uint64_t coalition_get_page_count(coalition_t coal, int *ntasks);
+/* coalition_info flavors */
+#define COALITION_INFO_RESOURCE_USAGE 1
+#define COALITION_INFO_SET_NAME 2
+#define COALITION_INFO_SET_EFFICIENCY 3
 
-/*
- * coalition_get_pid_list:
- * Gather a list of constituent PIDs of tasks within a coalition playing a
- * given role.
- *
- * Parameters:
- * 	coal       : The coalition to investigate
- * 	rolemask   : The set of coalition task roles used to filter the list
- * 	             of PIDs returned in 'pid_list'. Roles can be combined
- * 	             using the COALITION_ROLEMASK_* tokens found in
- * 	             <mach/coalition.h>. Each PID returned is guaranteed to
- * 	             be tagged with one of the task roles specified by this
- * 	             mask.
- * 	sort_order : The order in which the returned PIDs should be sorted
- * 	             by default this is in descending page count.
- * 	pid_list   : Pointer to an array of PIDs that will be filled with
- * 	             members of the coalition tagged with the given 'taskrole'
- * 	list_sz    : The size (in number of PIDs) of 'pid_list'
- *
- * Note:
- * This function will return the list of PIDs in a sorted order. By default
- * the PIDs will be sorted by task page count in descending order. In the
- * future it may be possible for user space to specify a level of importance
- * for each coalition member. If there is a user space specified importance,
- * then the list of PIDs returned will be sorted in _ascending_ importance,
- * i.e., pid_list[0] will be the least important task (or the largest consumer
- * of memory). The desired sort order can be specified using the
- * COALITION_SORT_* definitions in osfmk/mach/coalition.h
- *
- * It is also possible to return an unsorted list of PIDs using the special
- * sort type 'COALITION_SORT_NOSORT'
- *
- * Returns: < 0 on ERROR
- *          0 if 'coal' contains no tasks whose role is 'taskrole'
- *              (or if the coalition is being deallocated)
- *          Otherwise: the number of PIDs in the coalition whose role is
- *                     'taskrole'. NOTE: This may be larger or smaller than
- *                     the 'pid_list' array.
- *
- */
-extern int coalition_get_pid_list(coalition_t coal, uint32_t rolemask,
-				  int sort_order, int *pid_list, int list_sz);
+#define COALITION_EFFICIENCY_VALID_FLAGS    (COALITION_FLAGS_EFFICIENT)
 
-#else /* !CONFIG_COALITIONS */
-static inline uint64_t coalition_id(__unused coalition_t coal)
-{
-	return 0;
-}
+/* structure returned from libproc coalition listing interface */
+struct procinfo_coalinfo {
+	uint64_t coalition_id;
+	uint32_t coalition_type;
+	uint32_t coalition_tasks;
+};
 
-static inline int coalitions_get_list(__unused int type,
-				      __unused struct procinfo_coalinfo *coal_list,
-				      __unused int list_sz)
-{
-	return 0;
-}
+#endif /* PRIVATE */
 
-static inline boolean_t coalition_is_leader(__unused task_t task,
-					    __unused int coal_type,
-					    coalition_t *coal)
-{
-	*coal = COALITION_NULL;
-	return FALSE;
-}
-
-static inline int coalition_get_task_count(__unused coalition_t coal)
-{
-	return 0;
-}
-
-static inline uint64_t coalition_get_page_count(__unused coalition_t coal,
-						__unused int *ntasks)
-{
-	return 0;
-}
-
-static inline int coalition_get_pid_list(__unused coalition_t coal,
-					 __unused uint32_t rolemask,
-					 __unused int sort_order,
-					 __unused int *pid_list,
-					 __unused int list_sz)
-{
-	return 0;
-}
+#ifdef XNU_KERNEL_PRIVATE
+#if COALITION_DEBUG
+#define coal_dbg(fmt, ...) \
+	printf("%s: " fmt "\n", __func__, ## __VA_ARGS__)
+#else
+#define coal_dbg(fmt, ...)
 #endif
 
-#endif /* KERNEL */
+#endif
 
-__END_DECLS
-
-#endif /* _SYS_COALITION_H_ */
+#endif /* _MACH_COALITION_H_ */
