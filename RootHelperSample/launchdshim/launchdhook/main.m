@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include "fishhook.h"
 #include <spawn.h>
-#include <sys/spawn_internal.h>
+#include <spawn_internal.h>
 #include <spawn_private.h>
 #include <limits.h>
 #include <dirent.h>
